@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=berlin&appid=cc4bd3a2b28ef27fb99270f993d05128`
+    )
+      .then((res) => res.json())
+      .then((superData) => setData(superData));
+  }, []);
+  console.log(data);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* mit dem "?" fragen wir ab ob daten vorhanden sind */}
+      <h1>Wetter in {data?.[0].name}</h1>
+
+      <h2>lat {data?.[0].lat}</h2>
+      <h2>lon {data?.[0].lon}</h2>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
