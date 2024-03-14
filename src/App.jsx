@@ -8,7 +8,9 @@ function App() {
 
   useEffect(() => {
     fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=berlin&appid=cc4bd3a2b28ef27fb99270f993d05128`
+      `http://api.openweathermap.org/geo/1.0/direct?q=berlin&appid=${
+        import.meta.env.VITE_API_KEY_KEY
+      }`
     )
       .then((res) => res.json())
       .then((superData) => setData(superData));
